@@ -23,7 +23,8 @@ passport.deserializeUser((id, done)=>{//id here is the user id that save in cook
 passport.use(new GoogleStrategy({
     clientID: keys.googleClientID,
     clientSecret: keys.googleClientSecret,
-    callbackURL:'/auth/google/callback'
+    callbackURL:'/auth/google/callback',
+    proxy:true
     }, (accessToken, refreshToken, profile, done)=>{
         // find the first googleId that is same as retrieved profile.id (it returns a Promise)
         User.findOne({ googleId: profile.id})
