@@ -7,11 +7,16 @@ module.exports =(app) =>{
     }))
 
     //getting code we do again the passport.authenticate to pass the code to Google
-    app.get('/auth/google/callback', passport.authenticate('google'))
+    app.get('/auth/google/callback', 
+            passport.authenticate('google'),
+                (req,res)=>{
+                    res.redirect('/surveys');
+                })
 
     app.get('/api/logout', (req,res)=>{
         req.logout(); //logout() is a function in passport
-        res.send(req.user); // it wont print out any user because we logged out 
+        //res.send(req.user); // it wont print out any user because we logged out 
+        res.redirect('/');
     });
     
     app.get('/api/current_user', (req,res)=>{
