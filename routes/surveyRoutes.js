@@ -28,10 +28,20 @@ module.exports = app => {
         const p = new Path('/api/survey/:surveyId/:choice'); /*return an object*/
         _.chain(req.body) /*chain helper to chain the map , compact, uniqBy, value*/
             .map(({email, url}) =>{
-                const match = p.test(new URL(url).pathname) /*match will be an object or null*/
-                if (match){
-                    return {email, surveyId:match.surveyId, choice:match.choice}
-                }
+                if (!url) {
+                    return res.status(400).json({ error: 'Some error message' });
+                  } else {
+                    const match = p.test(new URL(url).pathname); 
+           
+                    if (match) {
+                      return {
+                        email,
+                        surveyId: match.surveyId,
+                        choice: match.choice,
+                      };
+                    }
+                    
+                  }
             })
 
             .compact()
