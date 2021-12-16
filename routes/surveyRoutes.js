@@ -25,7 +25,7 @@ module.exports = app => {
     })
 
     app.post('/api/surveys/webhooks', (req,res)=>{
-        const p = new Path('api/survey/:surveyId/:choice'); /*return an object*/
+        const p = new Path('/api/survey/:surveyId/:choice'); /*return an object*/
         _.chain(req.body) /*chain helper to chain the map , compact, uniqBy, value*/
             .map(({email, url}) =>{
                 const match = p.test(new URL(url).pathname) /*match will be an object or null*/
@@ -44,7 +44,8 @@ module.exports = app => {
                     }
                 },{
                     $int : {[choice]:  1},
-                    $set: {'recipients.$.responded' : true}
+                    $set: {'recipients.$.responded' : true},
+                    lastResponded: new Date()
                 }).exec();
             })
             .value();
