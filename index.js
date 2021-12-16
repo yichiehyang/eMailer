@@ -5,9 +5,13 @@ const passport = require("passport");
 const keys = require('./config/keys');
 const { cookieKey } = require('./config/keys');
 require("./models/User");
+require("./models/Survey");
 require("./services/passport");
 
-mongoose.connect(keys.mongoURI);
+mongoose
+     .connect( keys.mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
+     .then(() => console.log( 'Database Connected' ))
+     .catch(err => console.log( err ));
 const app = express();
 
 app.use(express.json());
@@ -24,6 +28,7 @@ app.use(passport.session());
 
 require('./routes/authRoutes')(app);
 require('./routes/billingRoutes')(app);
+require('./routes/surveyRoutes')(app);
 
 if (process.env.NODE_ENV === 'production'){
     //Express will serve up production assets
