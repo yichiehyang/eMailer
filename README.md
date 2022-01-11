@@ -1,6 +1,8 @@
 # eMailer 
 
-** Web link: https://emailer-irene.herokuapp.com/ **
+### Web link: https://emailer-irene.herokuapp.com/ 
+
+
 A full-stack application with advanced features, such as Google authentication, billing method, and email handling, for
 sending mass emails to many users in order to collect feedbacks
 
